@@ -14,9 +14,9 @@
 
 """Frontends for humans who want to play pycolab games."""
 
-from __future__ import absolute_import
-from __future__ import division
-from __future__ import print_function
+
+
+
 
 import collections
 import curses
@@ -121,7 +121,7 @@ class CursesUi(object):
     try:
       self._keycodes_to_actions = {
           ord(key) if isinstance(key, str) else key: action
-          for key, action in keys_to_actions.iteritems()}
+          for key, action in keys_to_actions.items()}
     except TypeError:
       raise TypeError('keys in the keys_to_actions argument must either be '
                       'numerical keycodes or single ASCII character strings.')
@@ -192,7 +192,7 @@ class CursesUi(object):
     # See whether the user is using any reserved keys. This check ought to be in
     # the constructor, but it can't run until curses is actually initialised, so
     # it's here instead.
-    for key, action in self._keycodes_to_actions.iteritems():
+    for key, action in self._keycodes_to_actions.items():
       if key in (curses.KEY_PPAGE, curses.KEY_NPAGE):
         raise ValueError(
             'the keys_to_actions argument to the CursesUi constructor binds '
@@ -355,8 +355,8 @@ class CursesUi(object):
     # plus the two default colours, plus the largest colour id (which we seem
     # not to be able to assign, at least not with xterm-256color) stick with
     # boring old white on black.
-    colours = set(self._colour_fg.itervalues()).union(
-        self._colour_bg.itervalues())
+    colours = set(self._colour_fg.values()).union(
+        iter(self._colour_bg.values()))
     if (curses.COLORS - 2) < len(colours): return
 
     # Get all unique characters that have a foreground and/or background colour.
@@ -373,10 +373,10 @@ class CursesUi(object):
            {cpair_0_fg_id, cpair_0_bg_id})  # We don't want to change these.
     ids = list(reversed(sorted(ids)))  # We use colour IDs from large to small.
     ids = ids[:len(colours)]  # But only those colour IDs we actually need.
-    colour_ids = dict(zip(colours, ids))
+    colour_ids = dict(list(zip(colours, ids)))
 
     # Program these colours into curses.
-    for colour, cid in colour_ids.iteritems():
+    for colour, cid in colour_ids.items():
       curses.init_color(cid, *colour)
 
     # Now add the default colours to the colour-to-ID map.
@@ -392,7 +392,7 @@ class CursesUi(object):
         {character: pid for pid, character in enumerate(characters, start=1)})
 
     # Program these color pairs into curses, and that's all there is to do.
-    for character, pid in self._colour_pair.iteritems():
+    for character, pid in self._colour_pair.items():
       # Get foreground and background colours for this character. Note how in
       # the absence of a specified background colour, the same colour as the
       # foreground is used.

@@ -16,9 +16,9 @@
 
 """"Prefabricated" `Sprite`s with all kinds of useful behaviour."""
 
-from __future__ import absolute_import
-from __future__ import division
-from __future__ import print_function
+
+
+
 
 from pycolab import things
 from pycolab.protocols import scrolling
@@ -497,8 +497,9 @@ class MazeWalker(things.Sprite):
       `MazeWalker`. See class docstring for details.
     """
 
-    def at((drow, dcol)):
+    def at(xxx_todo_changeme):
       """Report character at egocentric coordinates `(drow, dcol)`."""
+      (drow, dcol) = xxx_todo_changeme
       new_row = self._virtual_row + drow
       new_col = self._virtual_col + dcol
       if not self._on_board(new_row, new_col): return self.EDGE

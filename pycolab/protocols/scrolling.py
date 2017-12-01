@@ -242,9 +242,9 @@ there is a chance that one of the egocentric entities will be forced into an
 illegal location before it even has a chance to live.
 """
 
-from __future__ import absolute_import
-from __future__ import division
-from __future__ import print_function
+
+
+
 
 from pycolab import things
 

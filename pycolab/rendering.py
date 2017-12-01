@@ -16,9 +16,9 @@
 
 """pycolab game board rendering for both humans and machines."""
 
-from __future__ import absolute_import
-from __future__ import division
-from __future__ import print_function
+
+
+
 
 import collections
 
@@ -171,7 +171,7 @@ class BaseObservationRenderer(object):
       presented to this `BaseObservationRenderer` since the last call to its
       `clear()` method.
     """
-    for character, layer in self._layers.iteritems():
+    for character, layer in self._layers.items():
       np.equal(self._board, ord(character), out=layer)
     return Observation(board=self._board, layers=self._layers)
 
@@ -257,12 +257,12 @@ class ObservationCharacterRepainter(object):
     if self._output_characters is None:
       self._output_characters = (
           set(original_observation.layers) -
-          set(self._character_mapping)).union(self._character_mapping.values())
+          set(self._character_mapping)).union(list(self._character_mapping.values()))
 
     # Determine whether we need to (re)allocate the layer storage for this new
     # (possibly differently-shaped) observation. If we do, do it.
     if ((self._layers is None) or
-        (next(self._layers.itervalues()).shape !=
+        (next(iter(self._layers.values())).shape !=
          original_observation.board.shape)):
       rows, cols = original_observation.board.shape
       self._layers = {char: np.zeros((rows, cols), dtype=np.bool_)
@@ -273,7 +273,7 @@ class ObservationCharacterRepainter(object):
     board = self._board_converter(original_observation)
 
     # Compute the mask layers from the newly repainted board.
-    for character, layer in self._layers.iteritems():
+    for character, layer in self._layers.items():
       np.equal(board, ord(character), out=layer)
 
     # Return the new observation.
@@ -305,7 +305,7 @@ class ObservationCharacterRepainter(object):
 
     def itervalues(self):
       my_class = ObservationCharacterRepainter._DefaultToIdentityAsciiMapping  # pylint: disable=protected-access
-      return (np.uint8(ord(c)) for c in super(my_class, self).itervalues())
+      return (np.uint8(ord(c)) for c in super(my_class, self).values())
 
 
 class ObservationToArray(object):
@@ -357,13 +357,13 @@ class ObservationToArray(object):
 
     # Attempt to infer a dtype for self._array if none is specified.
     self._dtype = (dtype if dtype is not None else
-                   np.array(next(value_mapping.itervalues())).dtype)
+                   np.array(next(iter(value_mapping.values()))).dtype)
 
     # Will we create a 2-D or a 3-D array? Only 3-D if the values in the mapping
     # can be an argument to `len()`; if so, that's also the depth of our
     # 3-D array.
     try:
-      self._depth = len(next(value_mapping.itervalues()))
+      self._depth = len(next(iter(value_mapping.values())))
       self._is_3d = True
     except TypeError:
       self._depth = 1  # Again, the array is always 3-D behind the scenes.
@@ -424,7 +424,7 @@ class ObservationToArray(object):
         raise RuntimeError(
             'This ObservationToArray only knows array values for the '
             'characters {}, but it received an observation with a character '
-            'not in that set'.format(str(''.join(self._value_mapping.keys()))))
+            'not in that set'.format(str(''.join(list(self._value_mapping.keys())))))
       mask = observation.board == ascii_value
 
       # I was hoping there would be an easier way to do this masking in the

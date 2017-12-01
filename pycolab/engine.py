@@ -20,9 +20,9 @@ Refer to the docstring for `Engine` for details. This module also includes the
 `Palette` helper class.
 """
 
-from __future__ import absolute_import
-from __future__ import division
-from __future__ import print_function
+
+
+
 
 import collections
 
@@ -491,7 +491,7 @@ class Engine(object):
       raise ValueError('The z_order argument {} to Engine.set_z_order is not a '
                        'proper permutation of the characters corresponding to '
                        'Sprites and Drapes in this game, which are {}.'.format(
-                           repr(z_order), self._sprites_and_drapes.keys()))
+                           repr(z_order), list(self._sprites_and_drapes.keys())))
     new_sprites_and_drapes = collections.OrderedDict()
     for character in z_order:
       new_sprites_and_drapes[character] = self._sprites_and_drapes[character]
@@ -685,7 +685,7 @@ class Engine(object):
     """
     self._renderer.clear()
     self._renderer.paint_all_of(self._backdrop.curtain)
-    for character, entity in self._sprites_and_drapes.iteritems():
+    for character, entity in self._sprites_and_drapes.items():
       # By now we should have checked fairly carefully that all entities in
       # _sprites_and_drapes are Sprites or Drapes.
       if isinstance(entity, things.Sprite) and entity.visible:
@@ -761,7 +761,7 @@ class Engine(object):
 
       # Copy all Sprites or Drapes into the new sprites_and_drapes OrderedDict,
       # inserting the moving entity in front of the one it's meant to occulude.
-      for character, entity in self._sprites_and_drapes.iteritems():
+      for character, entity in self._sprites_and_drapes.items():
         if character == move_this: continue
         new_sprites_and_drapes[character] = entity
         if character == in_front_of_that:

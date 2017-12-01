@@ -17,9 +17,9 @@
 All details are in the docstring for `Plot`.
 """
 
-from __future__ import absolute_import
-from __future__ import division
-from __future__ import print_function
+
+
+
 
 from pycolab.protocols import logging as plab_logging
 
