@@ -228,7 +228,7 @@ def ascii_art_to_game(art,
     # Switch to this character's update group.
     game.update_group(update_group_for[character])
     # Find locations where this character appears in the ASCII art.
-    mask = art == character
+    mask = art == character.encode()
 
     if character in drapes:
       # Add the drape to the Engine.
@@ -263,7 +263,7 @@ def ascii_art_to_game(art,
   ### 7. Add the Backdrop to the engine ###
 
   game.set_prefilled_backdrop(
-      characters=''.join(np.unique(art)),
+      characters=np.unique(art).tostring().decode(),
       prefill=art.view(np.uint8),
       backdrop_class=backdrop.pycolab_thing,
       *backdrop.args, **backdrop.kwargs)

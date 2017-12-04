@@ -262,12 +262,12 @@ class Scrolly(things.Drape):
       """
       # some (not all) kwargs that you can pass on to Scrolly.__init__.
       return {'board_shape': self._board_shape,
-              'whole_pattern': self._whole_pattern_art == character,
+              'whole_pattern': self._whole_pattern_art == character.encode(),
               'board_northwest_corner': self._board_northwest_corner}
 
     def _whole_pattern_position(self, character, error_name):
       """Find the absolute location of `character` in game world ASCII art."""
-      pos = list(np.argwhere(self._whole_pattern_art == character))
+      pos = list(np.argwhere(self._whole_pattern_art == character.encode()))
       if not pos: raise RuntimeError(
           '{} found no instances of {} in the pattern art used to build this '
           'PatternInfo object.'.format(error_name, repr(character)))

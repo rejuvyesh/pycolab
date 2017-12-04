@@ -303,7 +303,7 @@ class ObservationCharacterRepainter(object):
       my_class = ObservationCharacterRepainter._DefaultToIdentityAsciiMapping  # pylint: disable=protected-access
       return np.uint8(ord(super(my_class, self).__getitem__(char)))
 
-    def itervalues(self):
+    def values(self):
       my_class = ObservationCharacterRepainter._DefaultToIdentityAsciiMapping  # pylint: disable=protected-access
       return (np.uint8(ord(c)) for c in super(my_class, self).values())
 
